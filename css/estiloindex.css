@@ -1,0 +1,16 @@
+body{
+    background-color: aqua;
+}
+h1{
+    text-align: center;
+}
+h2{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.redes{
+    background-color: yellow;
+    border-radius: 8px;
+    width: 25%;
+    border: 1px solid black;
+    text-align: center;
+}

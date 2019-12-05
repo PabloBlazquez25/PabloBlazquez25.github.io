@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="css/estilodocker.css">
+        <title>Portfolio</title>
+    </head>
+    <body>
+        <h1>Docker</h1>
+        <img id="boton" src="img/paginaprincipal.png">
+        <div>
+
+            <div>
+                <p>Docker es un sistema de virtualización que comparte con el anfitrión el
+                    kernel y el sistema de archivos.<br>
+                    El anfitrión siempre es un sistema linux. Si estamos en Windows o MAC,necesitaré
+                    una máquina virtual windows virtualizada con VirtualBox o similares.</p>
+                <p>
+                    Un software de máquinas virtuales necesita instalar el sistema operativo
+                    completo. Ejemplos de sistemas de virtualización:
+                </p>
+                <ul>
+                    <li>VirtualBox (Múltiples plataformas)</li>
+                    <li>Hyper-V (Windows)</li>
+                    <li>Pararells (MAC)</li>
+                    <li>VMware (Múltiples plataformas)</li>
+                    <li>qEMV (Linux)</li>
+                    <li>XEN (UNIX/Linux)</li>
+                    <li>KUM (UNIX/Linux)</li>
+                </ul>
+                <p>
+                    Un software de contenedores es un sistema de virtualizacion que comparte el
+                    kernel con el anfitrion. Se basa en el concepto de microservicio, donde tengo
+                    todos los programas instalados, configurados y funcionando, gracias a los
+                    contenedores.<div>Ejemplo de software de contenedores:</div>
+                </p>
+                <ul>
+                    <li>LXD</li>
+                    <li>Docker</li>
+                    <li>Kubernetes</li>
+                </ul>
+                <p><img src="img/dockervs.png" alt="Docker vs. Máquinas virtuales"></p>
+                <p>Para saber más sobre el tema:</p>
+                <ul>
+                    <li>
+                        <a href="https://www.docker.com/" target="_blank">Web Oficial de Docker</a>
+                    </li>
+                    <li>
+                        <a href="https://hub.docker.com/" target="_blank">Docker hub (listado de contenedores)</a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://www.adictosaltrabajo.com/2015/07/29/docker-for-dummies/"
+                            target="_blank">Tutorial de docker</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <span>Dockerfile</span>
+            <p>Un dockerfile es una receta para crear una imagen para una aplicación
+                particular de Docker. De este modo podemos tomar una imagen base, instalarle
+                programas, configurar esos programas y dejarla preparada para crear contenedores
+                a partir de ella.</p>
+        </div>
+        <p>Veamos un ejemplo:</p>
+        <pre>
+            # use phusion/baseimage as base image.
+            from ubuntu:latest
+            
+            # use baseimage-docker's init system.
+            cmd ["/sbin/my_init"]
+            
+            # install prerequisites
+            run apt-get update; \
+                apt-get install -y udhcpd
+            
+            # set up start up scripts
+            run mkdir /etc/service/udhcpd
+            add udhcpd.sh /etc/service/udhcpd/run
+            run chmod +x /etc/service/udhcpd/run
+            
+            # clean up apt when done.
+            run apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+            
+            # expose the port
+            expose 67
+            expose 67/udp
+            expose 68
+            expose 68/udp
+            
+            # volumes
+            volume /data
+        </pre>
+        
+            <p>
+                La línea <bold>from ubuntu:latest</bold> sirve para 
+                indicar la imagen base que queremos usar para nuestro 
+                contenedor.
+            </p>
+        
+            <p>
+        
+        
+            </p>
+        
+            <p>
+                Creamos el archivos udhcpd.conf
+            </p>
+        <pre>
+        # the start and end of the ip lease block
+        start	172.17.0.200
+        end		172.17.0.210
+        
+        # the interface that udhcpd will use
+        interface	eth0
+        
+        opt	dns	192.168.18.3 8.8.8.8
+        option	subnet	255.255.0.0
+        opt	router	172.17.0.1
+        # opt	wins	192.168.10.10
+        # option	dns	129.219.13.81	# appended to above dns servers for a total of 3
+        option	domain	local
+        option	lease	864000		
+        </pre>
+        
+                <p>Crear el contenedor:  </p>                    
+                    docker build .
+                <p>
+                Lanzar el contenedor: docker run -d --net=host -p 67:67 -p 67:67/udp 
+                    -p 68:68 -p 68:68/udp --name=dhcpd 
+                    -v "ruta al directorio udhcpd"/data ubuntu:latest </p>
+                </p>
+                <p>Abrir terminal en contenedor: docker exec -ti nombre_contenedor /bin/bash</p>
+            </div>
+
+    </body>
+</html>

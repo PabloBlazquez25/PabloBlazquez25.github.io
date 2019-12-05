@@ -1,0 +1,30 @@
+*{
+    -webkit-box-sizing: border-box;
+}
+body{
+    background-image: url("fondopractica.jpg");
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    color: white;
+}
+img{
+    width: 50%;
+    margin: 10px;
+    border: 1px white solid;
+}
+body h1{
+    text-align: center;
+    background-color: turquoise;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    overflow-y: 30;
+    width: 100%;
+}
+.ejercicios{
+    background-color: white;
+    color: black;
+    width: 200px;
+    border-radius: 8px;
+    text-align: center;
+}
